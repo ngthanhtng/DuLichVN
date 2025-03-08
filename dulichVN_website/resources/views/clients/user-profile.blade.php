@@ -7,7 +7,7 @@
                     <div class="card-header">Ảnh đại diện</div>
                     <div class="card-body text-center">
                         <img id="avatarPreview" class="img-account-profile rounded-circle mb-2"
-                            src="{{ asset('clients/assets/images/user-profile/' . $user->avatar) }}"
+                            src="{{ asset('admin/assets/images/user-profile/' . $user->avatar) }}"
                             style="width:160px; height: 160px;" alt="Ảnh đại diện {{ $user->avatar }}">
 
                         <div class="small font-italic text-muted mb-4">JPG hoặc PNG không lớn hơn 5 MB</div>
@@ -51,7 +51,7 @@
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputPhone">Phone number</label>
-                                    <input class="form-control" id="inputPhone" type="number"
+                                    <input class="form-control" id="inputPhone" type="texttext"
                                         placeholder="Số điện thoại" value="{{ $user->phoneNumber }}" required>
                                 </div>
                             </div>

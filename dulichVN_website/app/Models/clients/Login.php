@@ -23,7 +23,7 @@ class Login extends Model
         $check = DB::table($this->table)
             ->where('username', $username)
             ->orWhere('email', $email)
-            ->exists(); 
+            ->exists();
 
         return $check;
     }

@@ -58,7 +58,7 @@
                         <ul class="list-style-one">
                             <li><i class="fal fa-map-marked-alt"></i> 470 Tran Dai Nghia, Ngu Hanh Son, Da Nang</li>
                             <li><i class="fal fa-envelope"></i> <a
-                                    href="mailto:minhdien.dev@gmail.com">minhdien.dev@gmail.com</a></li>
+                                    href="mailto:tn7341075@gmail.com">tn7341075@gmail.com</a></li>
                             <li><i class="fal fa-phone-volume"></i> <a href="callto:+88012334588">+880 (123)
                                     345 88</a></li>
                         </ul>

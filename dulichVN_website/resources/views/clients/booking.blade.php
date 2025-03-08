@@ -24,7 +24,7 @@
 
                 <div class="form-group">
                     <label for="tel">Số điện thoại*</label>
-                    <input type="number" id="tel" placeholder="Nhập số điện thoại liên hệ" name="tel"
+                    <input type="text" id="tel" placeholder="Nhập số điện thoại liên hệ" name="tel"
                         required>
                     <span class="error-message" id="telError"></span>
                 </div>

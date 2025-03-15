@@ -8235,3 +8235,8 @@ blockquote {
   justify-content: center; }
   .footer-bottom-nav li {
     margin: 0 13px 5px; }
+
+.tour-gallery > div {
+  width: 80%;
+}
+

@@ -10,7 +10,6 @@ use App\Http\Controllers\admin\UserManagementController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\clients\HomeController;
 use App\Http\Controllers\clients\AboutController;
-use App\Http\Controllers\clients\ServicesController;
 use App\Http\Controllers\clients\ToursController;
 use App\Http\Controllers\clients\TourDetailController;
 use App\Http\Controllers\clients\DestinationController;
@@ -24,6 +23,7 @@ use App\Http\Controllers\clients\MyTourController;
 use App\Http\Controllers\clients\PayPalController;
 use App\Http\Controllers\clients\SearchController;
 use App\Http\Controllers\clients\TourBookedController;
+use App\Http\Controllers\ChatbotController;
 
 /*
 |--------------------------------------------------------------------------
@@ -152,3 +152,14 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     Route::post('/reply-contact', [ContactManagementController::class, 'replyContact'])->name('admin.reply-contact');
 
 });
+
+//API
+Route::post('/chat', [ChatbotController::class, 'chat']);
+
+// use App\Http\Controllers\TourController;
+
+// Route::get('/ask-taggoai/{message}', [TourController::class, 'sendToTaggoAI']);
+
+use App\Http\Controllers\WebhookController;
+
+Route::post('/taggoai-webhook', [WebhookController::class, 'handleWebhook']);

@@ -7,12 +7,14 @@
     "require": {
         "php": "^8.0.2",
         "barryvdh/laravel-dompdf": "^2.2",
+        "google-gemini-php/laravel": "^1.0",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.7",
+        "openai-php/client": "^0.10.3",
         "srmklive/paypal": "~3.0",
         "yoeunes/toastr": "^1.2.5"
     },
@@ -62,7 +64,8 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
         }
     },
     "minimum-stability": "stable",

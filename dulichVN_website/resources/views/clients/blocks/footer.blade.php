@@ -131,6 +131,9 @@
     <script src="{{asset('clients/assets/js/custom-js.js')}}"></script>
     <script src="{{asset('clients/assets/js/jquery.datetimepicker.full.min.js')}}"></script>
 
+    <!-- Chatbot -->
+    <script src="{{asset('clients/assets/js/chatbot.js')}}"></script>
+
 </body>
 
 </html>

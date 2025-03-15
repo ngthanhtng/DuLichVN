@@ -280,5 +280,5 @@
 </section>
 <!-- CTA Area end -->
 
-
+@include('clients.blocks.chatbot')
 @include('clients.blocks.footer_home')

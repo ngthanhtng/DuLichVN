@@ -36,9 +36,4 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT'),
     ],
-
-    'taggoai' => [
-        'api_key' => env('TAGGOAI_API_KEY'),
-        'base_url' => 'https://api.taggoai.com',
-    ],
 ];

@@ -155,14 +155,3 @@ Route::prefix('admin')->middleware('admin')->group(function () {
 
 //API
 Route::post('/chat', [ChatbotController::class, 'chat']);
-
-// use App\Http\Controllers\TourController;
-
-// Route::get('/ask-taggoai/{message}', [TourController::class, 'sendToTaggoAI']);
-
-// use App\Http\Controllers\WebhookController;
-
-// Route::post('/taggoai-webhook', [WebhookController::class, 'handleWebhook']);
-
-use App\Http\Controllers\TaggoAIController;
-Route::get('/ask-taggoai/{message}', [TaggoAIController::class, 'sendToTaggoAI']);

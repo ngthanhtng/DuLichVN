@@ -25,11 +25,3 @@ use App\Http\Controllers\TourController;
 
 Route::get('/tours', [TourController::class, 'getTours']);
 Route::get('/tours/{destination}', [TourController::class, 'getTourByDestination']);
-
-// use App\Http\Controllers\WebhookController;
-
-// Route::post('/taggoai-webhook', [WebhookController::class, 'handleWebhook']);
-
-use App\Http\Controllers\TaggoAIController;
-
-Route::post('/taggoai-webhook', [TaggoAIController::class, 'handleWebhook']);

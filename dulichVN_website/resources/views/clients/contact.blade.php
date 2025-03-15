@@ -173,5 +173,5 @@
 </div>
 <!-- Contact Map End -->
 
-
+@include('clients.blocks.chatbot')
 @include('clients.blocks.footer')

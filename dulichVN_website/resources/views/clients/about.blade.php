@@ -288,6 +288,5 @@
 </div>
 <!-- Client Logo Area end -->
 
-
-
+@include('clients.blocks.chatbot')
 @include('clients.blocks.footer')

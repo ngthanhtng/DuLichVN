@@ -1,7 +1,3 @@
-<!---Start TaggoAI--->
-{{-- <script async data-taggo-botid="67d2703ae7ed58302f2dceb2" src="https://widget.taggo.chat/v2.js"></script> --}}
-<!---End TaggoAI--->
-
 <div id="chat-icon" onclick="toggleChat()">
     <img src="{{ asset('clients/assets/images/logos/chatbot.png') }}" alt="Chatbot">
 </div>

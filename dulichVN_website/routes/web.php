@@ -160,6 +160,9 @@ Route::post('/chat', [ChatbotController::class, 'chat']);
 
 // Route::get('/ask-taggoai/{message}', [TourController::class, 'sendToTaggoAI']);
 
-use App\Http\Controllers\WebhookController;
+// use App\Http\Controllers\WebhookController;
 
-Route::post('/taggoai-webhook', [WebhookController::class, 'handleWebhook']);
+// Route::post('/taggoai-webhook', [WebhookController::class, 'handleWebhook']);
+
+use App\Http\Controllers\TaggoAIController;
+Route::get('/ask-taggoai/{message}', [TaggoAIController::class, 'sendToTaggoAI']);

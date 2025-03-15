@@ -51,7 +51,7 @@
     <link rel="stylesheet" href="{{ asset('clients/assets/css/user-profile.css') }}" />
     
     {{-- Chatbot --}}
-    <link rel="stylesheet" href="{{ asset('clients/assets/css/chatbot.css') }}" />
+    {{-- <link rel="stylesheet" href="{{ asset('clients/assets/css/chatbot.css') }}" /> --}}
 
     <!-- Import CSS for Toastr -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />

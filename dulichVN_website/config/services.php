@@ -37,4 +37,8 @@ return [
         'redirect' => env('GOOGLE_REDIRECT'),
     ],
 
+    'taggoai' => [
+        'api_key' => env('TAGGOAI_API_KEY'),
+        'base_url' => 'https://api.taggoai.com',
+    ],
 ];

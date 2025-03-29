@@ -123,6 +123,11 @@
                         <h6 class="widget-title">Thời gian</h6>
                         <ul class="radio-filter">
                             <li>
+                                <input class="form-check-input" type="radio" name="duration" id="1ngay"
+                                    value="1n">
+                                <label for="1ngay">1 ngày</label>
+                            </li>
+                            <li>
                                 <input class="form-check-input" type="radio" name="duration" id="3ngay2dem"
                                     value="3n2d">
                                 <label for="3ngay2dem">3 ngày 2 đêm</label>
@@ -137,6 +142,11 @@
                                     value="5n4d">
                                 <label for="5ngay4dem">5 ngày 4 đêm</label>
                             </li>
+                            <li>
+                                <input class="form-check-input" type="radio" name="duration" id="6ngay5dem"
+                                    value="6n5d">
+                                <label for="6ngay5dem">6 ngày 5 đêm</label>
+                            </li>
                         </ul>
                     </div>
 
@@ -146,10 +156,11 @@
                             <h6 class="widget-title">Phổ biến Tours</h6>
                             @foreach ($toursPopular as $tour)
                                 <div class="destination-item tour-grid style-three bgc-lighter">
-                                    <div class="image">
+                                    <div class="image" style="height: 40%;">
                                         <span class="badge">10% Off</span>
-                                        <img src="{{ asset('clients/assets/images/gallery-tours/' . $tour->images[0]) }}"
-                                            alt="Tour">
+                                        {{-- <img src="{{ asset('clients/assets/images/gallery-tours/' . $tour->images[0]) }}" --}}
+                                        <img src="{{ asset($tourDetail->images[0])}}"
+                                            alt="Tour" style="height: 100%;object-fit: cover;">
                                     </div>
                                     <div class="content">
                                         <div class="destination-header">

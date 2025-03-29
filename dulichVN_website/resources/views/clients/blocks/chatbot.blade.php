@@ -16,3 +16,4 @@
 
 <link rel="stylesheet" href="{{ asset('clients/assets/css/chatbot.css') }}">
 <script src="{{ asset('clients/assets/js/chatbot.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>

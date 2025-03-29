@@ -1,6 +1,13 @@
 @include('clients.blocks.header')
 @include('clients.blocks.banner')
 
+<style>
+    .team-item img {
+        height: 380px;
+        object-fit: cover;
+    }
+</style>
+
 <!-- Benefit Area start -->
 <section class="benefit-area mt-100 rel z-1">
     <div class="container">

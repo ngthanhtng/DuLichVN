@@ -51,8 +51,10 @@
     padding-bottom: 10px;
 }
 .tour-gallery .gallery-item img {
-    height: 100%;
-    border-radius: 8px;
+    width: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ chiều rộng của container */
+    height: 100%; /* Đặt chiều cao cố định cho tất cả hình ảnh */
+    object-fit: cover; /* Đảm bảo hình ảnh không bị méo và giữ tỷ lệ */
+    border-radius: 8px; /* Tùy chọn: Bo góc cho hình ảnh */
 }
 
 /****************************************

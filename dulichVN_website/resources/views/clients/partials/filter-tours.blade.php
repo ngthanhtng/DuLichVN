@@ -1,11 +1,18 @@
+<style>
+    .destination-item.style-three.tour-grid .content {
+        padding: 20px 10px 30px;
+    }
+</style>
+
 @foreach ($tours as $tour)
     <div class="col-xl-4 col-md-6" style="margin-bottom: 30px">
         <div class="destination-item tour-grid style-three bgc-lighter block_tours equal-block-fix" data-aos="fade-up"
-            data-aos-duration="1500" data-aos-offset="50">
-            <div class="image">
+            data-aos-duration="1500" data-aos-offset="50" style="padding: 10px;">
+            <div class="image" style="height: 40%;">
                 <span class="badge bgc-pink">Featured</span>
                 <a href="#" class="heart"><i class="fas fa-heart"></i></a>
-                <img src="{{ asset('clients/assets/images/gallery-tours/' . $tour->images[0] . '') }}" alt="Tour List">
+                {{-- <img src="{{ asset('clients/assets/images/gallery-tours/' . $tour->images[0] . '') }}" alt="Tour List"> --}}
+                <img src="{{ asset( $tour->images[0] . '') }}" alt="Tour List" style="height: 100%;object-fit: cover;">
             </div>
             <div class="content equal-content-fix">
                 <div class="destination-header">

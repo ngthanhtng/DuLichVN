@@ -1,6 +1,27 @@
 @include('clients.blocks.header')
 @include('clients.blocks.banner')
 
+<style>
+    .destination-item .image {
+        width: 100%; /* Đảm bảo chiều rộng của container chiếm toàn bộ */
+        height: 250px; /* Đặt chiều cao cố định cho các thẻ div.image */
+        overflow: hidden; /* Ẩn phần hình ảnh vượt ra ngoài container */
+        border-radius: 8px; /* Tùy chọn: Bo góc cho container */
+        position: relative; /* Đảm bảo các phần tử con được định vị chính xác */
+    }
+
+    .destination-item .image img {
+        width: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ chiều rộng của container */
+        height: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ chiều cao của container */
+        object-fit: cover; /* Đảm bảo hình ảnh không bị méo và giữ tỷ lệ */
+        display: block; /* Loại bỏ khoảng trắng dưới hình ảnh */
+    }
+    
+    .destination-item {
+        padding: 10px 10px 0;
+    }
+</style>
+
 <!-- Popular Destinations Area start -->
 <section class="popular-destinations-area pt-100 pb-90 rel z-1">
     <div class="container">
@@ -32,8 +53,9 @@
                     <div class="destination-item style-two" data-aos-duration="1500" data-aos-offset="50">
                         <div class="image" style="max-height: 250px">
                             <a href="#" class="heart"><i class="fas fa-heart"></i></a>
-                            <img src="{{ asset('clients/assets/images/gallery-tours/' . $tour->images[0]) }}"
-                                alt="Destination">
+                            {{-- <img src="{{ asset('clients/assets/images/gallery-tours/' . $tour->images[0]) }}" --}}
+                            <img src="{{ asset( $tour->images[0] . '') }}"
+                                alt="Destination" style="height: 100%;object-fit: cover;">
                         </div>
                         <div class="content">
                             <h6 class="tour-title"><a

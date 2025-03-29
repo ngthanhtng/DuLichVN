@@ -71,9 +71,11 @@ class ToursController extends Controller
         if ($req->filled('time')) {
             $duration = $req->time;
             $time = [
+                '1n' => '1 ngày',
                 '3n2d' => '3 ngày 2 đêm',
                 '4n3d' => '4 ngày 3 đêm',
-                '5n4d' => '5 ngày 4 đêm'
+                '5n4d' => '5 ngày 4 đêm',
+                '6n5d' => '6 ngày 5 đêm'
             ];
             $conditions[] = ['time', '=', $time[$duration]];
         }

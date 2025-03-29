@@ -21,33 +21,33 @@
 <div class="tour-gallery">
     <div class="container-fluid">
         <div class="row gap-10 justify-content-center rel">
-            {{-- <div class="col-lg-4 col-md-6" style="width: 50%;">
+            <div class="col-lg-4 col-md-6" style="width: 50%;">
                 <div class="gallery-item gallery-between">
                     <img src="{{ asset($tourDetail->images[0])}}"
                         alt="Destination">
                 </div>
             </div>
             <div class="col-lg-4 col-md-6" style="width: 25%; display: flex; flex-direction: column; justify-content: space-between;">
-                <div class="gallery-item">
+                <div class="gallery-item" style="height: 48%;">
                     <img src="{{ asset($tourDetail->images[1])}}"
                         alt="Destination">
                 </div>
-                <div class="gallery-item">
+                <div class="gallery-item" style="height: 48%;">
                     <img src="{{ asset($tourDetail->images[2])}}"
                         alt="Destination">
                 </div>
             </div>
             <div class="col-lg-4 col-md-6" style="width: 25%; display: flex; flex-direction: column; justify-content: space-between;">
-                <div class="gallery-item">
+                <div class="gallery-item" style="height: 48%;">
                     <img src="{{ asset($tourDetail->images[3])}}"
                         alt="Destination">
                 </div>
-                <div class="gallery-item">
+                <div class="gallery-item" style="height: 48%;">
                     <img src="{{ asset($tourDetail->images[4])}}"
                         alt="Destination">
                 </div>
-            </div> --}}
-            <div class="col-lg-4 col-md-6" style="width: 50%;">
+            </div>
+            {{-- <div class="col-lg-4 col-md-6" style="width: 50%;">
                 <div class="gallery-item gallery-between">
                     <img src="{{ asset('clients/assets/images/gallery-tours/' . $tourDetail->images[0] . '') }}"
                         alt="Destination">
@@ -72,7 +72,7 @@
                     <img src="{{ asset('clients/assets/images/gallery-tours/' . $tourDetail->images[4] . '') }}"
                         alt="Destination">
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

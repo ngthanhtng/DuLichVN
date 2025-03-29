@@ -43,11 +43,15 @@ async function sendUserMessage() {
 
     appendMessage(userMessage, "user-message");
 
-    document.getElementById('userMessage').value = ''; // Xóa ô nhập
+    document.getElementById('userMessage').value = ''; // Clear input field
+
+    // Append "typing..." message
+    const typingMessageElement = appendMessage("Đang gõ...", "bot-response");
 
     const botResponse = await sendMessage(userMessage);
 
-    appendMessage(botResponse, "bot-response");
+    // Replace "typing..." message with the actual response
+    typingMessageElement.innerHTML = marked.parse(botResponse);
 }
 
 function appendMessage(text, className) {
@@ -56,13 +60,15 @@ function appendMessage(text, className) {
     messageElement.classList.add("chat-message", className);
 
     if (className === "bot-response") {
-        messageElement.innerHTML = text; // Hiển thị nội dung có chứa thẻ HTML
+        messageElement.innerHTML = marked.parse(text); // Parse Markdown text to HTML
     } else {
-        messageElement.textContent = text; // Hiển thị nội dung dạng text cho user
+        messageElement.textContent = text; // Display user message as plain text
     }
 
     chatBox.appendChild(messageElement);
     scrollToBottom();
+
+    return messageElement; // Return the message element for further manipulation
 }
 
 function scrollToBottom() {

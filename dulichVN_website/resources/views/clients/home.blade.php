@@ -1,6 +1,12 @@
 @include('clients.blocks.header_home')
 @include('clients.blocks.banner_home')
 
+<style>
+    .destination-item {
+        padding: 10px 10px 0;
+    }
+</style>
+
 <!--Form Back Drop-->
 <div class="form-back-drop"></div>
 
@@ -25,8 +31,9 @@
                         <div class="image">
                             <div class="ratting"><i class="fas fa-star"></i> {{ number_format($tour->rating, 1) }}</div>
                             <a href="#" class="heart"><i class="fas fa-heart"></i></a>
-                            <img src="{{ asset('clients/assets/images/gallery-tours/' . $tour->images[0] . '') }}"
-                                alt="Destination">
+                            {{-- <img src="{{ asset('clients/assets/images/gallery-tours/' . $tour->images[0] . '') }}" --}}
+                            <img src="{{ asset( $tour->images[0] . '') }}"
+                                alt="Destination" style="height: 100%;object-fit: cover;">
                         </div>
                         <div class="content">
                             <span class="location"><i class="fal fa-map-marker-alt"></i>{{ $tour->destination }}</span>

@@ -117,7 +117,7 @@
             <div class="row">
                 <div class="col-lg-5">
                     <div class="copyright-text text-center text-lg-start">
-                        <p>@Copy 2024 <a href="{{ route('home') }}">Travela</a>, All rights reserved</p>
+                        <p>@Copy 2024 <a href="{{ route('home') }}">DulichVN</a>, All rights reserved</p>
                     </div>
                 </div>
                 <div class="col-lg-7 text-center text-lg-end">

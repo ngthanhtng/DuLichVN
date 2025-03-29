@@ -4468,15 +4468,19 @@ h6, .h6, blockquote {
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.1); }
   .destination-item .image {
-    margin: 10px;
-    overflow: hidden;
-    position: relative;
-    border-radius: 10px; }
-    .destination-item .image img {
-      width: 100%;
-      -webkit-transition: 0.5s;
-      -o-transition: 0.5s;
-      transition: 0.5s; }
+      width: 100%; /* Đảm bảo chiều rộng của container chiếm toàn bộ */
+      height: 250px; /* Đặt chiều cao cố định cho các thẻ div.image */
+      overflow: hidden; /* Ẩn phần hình ảnh vượt ra ngoài container */
+      border-radius: 8px; /* Tùy chọn: Bo góc cho container */
+      position: relative; /* Đảm bảo các phần tử con được định vị chính xác */
+  }
+  
+  .destination-item .image img {
+      width: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ chiều rộng của container */
+      height: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ chiều cao của container */
+      object-fit: cover; /* Đảm bảo hình ảnh không bị méo và giữ tỷ lệ */
+      display: block; /* Loại bỏ khoảng trắng dưới hình ảnh */
+  }
     .destination-item .image .ratting {
       position: absolute;
       left: 0;

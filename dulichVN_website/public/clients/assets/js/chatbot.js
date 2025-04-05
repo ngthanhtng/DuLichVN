@@ -49,9 +49,11 @@ async function sendUserMessage() {
     const typingMessageElement = appendMessage("Đang gõ...", "bot-response");
 
     const botResponse = await sendMessage(userMessage);
+    console.log("Bot response before parse:", botResponse);
 
     // Replace "typing..." message with the actual response
     typingMessageElement.innerHTML = marked.parse(botResponse);
+    console.log("Replacing typing message with:", marked.parse(botResponse));
 }
 
 function appendMessage(text, className) {

@@ -107,7 +107,6 @@ Route::prefix('admin')->group(function () {
     Route::get('/login', [LoginAdminController::class, 'index'])->name('admin.login');
     Route::post('/login-account', [LoginAdminController::class, 'loginAdmin'])->name('admin.login-account');
     Route::get('/logout', [LoginAdminController::class, 'logout'])->name('admin.logout');
-
 });
 
 Route::prefix('admin')->middleware('admin')->group(function () {

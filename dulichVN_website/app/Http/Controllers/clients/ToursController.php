@@ -114,4 +114,15 @@ class ToursController extends Controller
         return view('clients.partials.filter-tours', compact('tours'));
 
     }
+
+    // Lấy danh sách tour từ database
+    public function getTours(Request $request)
+    {
+        $tours = $this->tours->getAllTours(9);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $tours
+        ]);
+    }
 }

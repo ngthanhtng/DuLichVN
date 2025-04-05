@@ -54,7 +54,18 @@ class ChatbotController extends Controller
             } else {
                 $responseText = "Các tour du lịch ở $region:<br>";
                 foreach ($tours as $tour) {
-                    $responseText .= '<a href="/tour-detail/' . $tour->tourId . '">' . $tour->title . '</a><br>';
+                    // Gọi phương thức getTourDetail để lấy thông tin chi tiết tour
+                    $tourDetail = (new Tours())->getTourDetail($tour->tourId);
+                    if ($tourDetail) {
+                        $image = $tourDetail->images->first() ?? 'default-image.jpg'; // Lấy hình ảnh đầu tiên hoặc hình mặc định
+                        $responseText .= '<div style="margin-bottom: 10px; display: flex; align-items: center;">';
+                        $responseText .= '<img src="' . $image . '" alt="' . $tourDetail->title . '" style="width: 100px; height: 100px; object-fit: cover; margin-right: 10px;">';
+                        $responseText .= '<div>';
+                        $responseText .= '<a href="/tour-detail/' . $tourDetail->tourId . '" style="font-weight: bold; text-decoration: none;">' . $tourDetail->title . '</a><br>';
+                        $responseText .= '<span>Giá: ' . number_format($tourDetail->priceAdult) . 'đ</span>';
+                        $responseText .= '</div>';
+                        $responseText .= '</div>';
+                    }
                 }
             }
 

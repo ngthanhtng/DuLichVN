@@ -85,4 +85,6 @@
         </div>
     </div>
 </div>
+
+@include('clients.blocks.chatbot')
 @include('clients.blocks.footer')

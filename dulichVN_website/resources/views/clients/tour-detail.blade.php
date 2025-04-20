@@ -319,5 +319,6 @@
 </section>
 <!-- Tour Details Area end -->
 
+@include('clients.blocks.chatbot')
 @include('clients.blocks.new_letter')
 @include('clients.blocks.footer')

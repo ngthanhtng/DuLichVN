@@ -159,7 +159,7 @@
                                     <div class="image" style="height: 40%;">
                                         <span class="badge">10% Off</span>
                                         {{-- <img src="{{ asset('clients/assets/images/gallery-tours/' . $tour->images[0]) }}" --}}
-                                        <img src="{{ asset($tourDetail->images[0])}}"
+                                        <img src="{{ asset($tour->images[0])}}"
                                             alt="Tour" style="height: 100%;object-fit: cover;">
                                     </div>
                                     <div class="content">
@@ -229,6 +229,7 @@
 </section>
 <!-- Tour Grid Area end -->
 
+@include('clients.blocks.chatbot')
 @include('clients.blocks.new_letter')
 @include('clients.blocks.footer')
 <script>

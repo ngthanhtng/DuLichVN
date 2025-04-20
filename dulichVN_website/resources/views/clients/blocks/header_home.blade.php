@@ -34,9 +34,6 @@
     <!-- Main Style -->
     <link rel="stylesheet" href="{{ asset('clients/assets/css/style.css') }}">
 
-    {{-- Chatbot --}}
-    {{-- <link rel="stylesheet" href="{{ asset('clients/assets/css/chatbot.css') }}" /> --}}
-
     {{-- boxicons --}}
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     {{-- date time picker  --}}

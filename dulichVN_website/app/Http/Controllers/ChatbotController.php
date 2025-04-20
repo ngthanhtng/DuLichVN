@@ -11,140 +11,102 @@ use GuzzleHttp\Exception\RequestException;
 
 class ChatbotController extends Controller
 {
+    public function greeting()  
+    {  
+        $greetingText = "<p>Chào bạn! Tôi có thể giúp gì cho bạn hôm nay?</p>";  
+        $suggestedQuestions = [  
+            "Cho tôi xem các tour dưới 5 triệu",  
+            "Có tour miền Bắc nào không?",  
+            "Tour du lịch miền Trung đang có gì?",  
+            "Bạn giới thiệu cho tôi vài tour nổi bật"  
+        ];  
+
+        // Tạo HTML danh sách câu hỏi để frontend hiển thị dạng nút  
+        $suggestionsHtml = '<div id="suggestedQuestions" style="margin-top:10px;">';  
+        foreach ($suggestedQuestions as $q) {  
+            // Mỗi câu hỏi nên có class hoặc data-attribute để frontend bắt sự kiện click  
+            $suggestionsHtml .= "<button class='suggested-question' style='margin:5px; padding:8px 12px; cursor:pointer; text-align: left;' data-question='{$q}'>{$q}</button>";  
+        }  
+        $suggestionsHtml .= '</div>';  
+
+        $responseText = $greetingText . $suggestionsHtml;  
+
+        return response()->json(['response' => $responseText]);  
+    }
+
     public function chat(Request $request)
     {
         $message = strtolower($request->input('message'));
-        $responseText = null; // Khởi tạo biến mặc định
+        $responseText = null;
+        $filteredTours = collect();
+        $filterDescription = 'danh sách tour hiện có';
 
-        // Kịch bản: Tour giá rẻ - linh hoạt theo giá người dùng nhắc đến
+        // Bộ lọc theo giá  
         if (preg_match('/dưới ([\d,.]+) ?triệu/', $message, $matches)) {
             $maxPrice = (float)str_replace([',', '.'], '', $matches[1]) * 1000000;
-            $tours = Tours::where('priceAdult', '<=', $maxPrice)->take(5)->get();
-
-            if ($tours->isEmpty()) {
-                $responseText = 'Hiện không có tour nào dưới ' . $matches[1] . ' triệu vào lúc này.';
-            } else {
-                $responseText = 'Dưới đây là các tour dưới ' . $matches[1] . ' triệu đồng:<br>';
-                foreach ($tours as $tour) {
-                    $responseText .= '<a href="/tour-detail/' . $tour->tourId . '">' . $tour->title . '</a> - ' . number_format($tour->priceAdult) . 'đ<br>';
-                }
-            }
-
-            return response()->json(['response' => $responseText]);
+            $filteredTours = Tours::where('priceAdult', '<=', $maxPrice)->take(5)->get();
+            $filterDescription = "các tour dưới {$matches[1]} triệu đồng";
         }
-
-        // Kịch bản: Tour theo miền Bắc, Trung, Nam từ cột domain
-        if (strpos($message, 'miền bắc') !== false) {
-            $tours = Tours::where('domain', 'b')->take(5)->get();
-            $region = 'miền Bắc';
+        // Bộ lọc theo vùng miền  
+        elseif (strpos($message, 'miền bắc') !== false) {
+            $filteredTours = Tours::where('domain', 'b')->take(5)->get();
+            $filterDescription = "các tour khu vực miền Bắc";
         } elseif (strpos($message, 'miền trung') !== false) {
-            $tours = Tours::where('domain', 't')->take(5)->get();
-            $region = 'miền Trung';
+            $filteredTours = Tours::where('domain', 't')->take(5)->get();
+            $filterDescription = "các tour khu vực miền Trung";
         } elseif (strpos($message, 'miền nam') !== false) {
-            $tours = Tours::where('domain', 'n')->take(5)->get();
-            $region = 'miền Nam';
-        } else {
-            $tours = null;
-            $region = null;
+            $filteredTours = Tours::where('domain', 'n')->take(5)->get();
+            $filterDescription = "các tour khu vực miền Nam";
+        }
+        // Không có keyword đặc biệt → lấy ngẫu nhiên 5 tour  
+        else {
+            $filteredTours = Tours::inRandomOrder()->take(5)->get();
         }
 
-        if (!is_null($tours)) {
-            if ($tours->isEmpty()) {
-                $responseText = "Hiện tại không có tour nào ở $region.";
-            } else {
-                $responseText = "Các tour du lịch ở $region:<br>";
-                foreach ($tours as $tour) {
-                    // Gọi phương thức getTourDetail để lấy thông tin chi tiết tour
-                    $tourDetail = (new Tours())->getTourDetail($tour->tourId);
-                    if ($tourDetail) {
-                        $image = $tourDetail->images->first() ?? 'default-image.jpg'; // Lấy hình ảnh đầu tiên hoặc hình mặc định
-                        $responseText .= '<div style="margin-bottom: 10px; display: flex; align-items: center;">';
-                        $responseText .= '<img src="' . $image . '" alt="' . $tourDetail->title . '" style="width: 100px; height: 100px; object-fit: cover; margin-right: 10px;">';
-                        $responseText .= '<div>';
-                        $responseText .= '<a href="/tour-detail/' . $tourDetail->tourId . '" style="font-weight: bold; text-decoration: none;">' . $tourDetail->title . '</a><br>';
-                        $responseText .= '<span>Giá: ' . number_format($tourDetail->priceAdult) . 'đ</span>';
-                        $responseText .= '</div>';
-                        $responseText .= '</div>';
-                    }
-                }
+        // Chuẩn bị nội dung tour cho Gemini  
+        $tourInfo = '';
+        foreach ($filteredTours as $tour) {
+            $detail = (new Tours())->getTourDetail($tour->tourId);
+            if ($detail) {
+                $link = url('/tour-detail/' . $detail->tourId);
+                $image = $detail->images->first() ?? 'default-image.jpg'; // Đảm bảo đường dẫn hình ảnh tồn tại  
+                $tourInfo .= "<div style='border:1px solid #ccc; margin-bottom: 10px; padding: 10px;'>";
+                $tourInfo .= "<img src='{$image}' alt='{$detail->title}' style='width: 100px; height: 100px; object-fit: cover; margin-right: 10px; float: left;'>";
+                $tourInfo .= "<strong>Tên tour:</strong> {$detail->title}<br>";
+                $tourInfo .= "<strong>Mô tả:</strong> {$detail->description}<br>";
+                $tourInfo .= "<strong>Vị trí:</strong> {$detail->destination}<br>";
+                $tourInfo .= "<strong>Giá:</strong> " . number_format($detail->priceAdult) . "đ<br>";
+                $tourInfo .= "<a href='{$link}' target='_blank'>Xem chi tiết</a>";
+                $tourInfo .= "</div><div style='clear: both;'></div>"; // Đảm bảo các div không bị chồng lên nhau  
             }
-
-            return response()->json(['response' => $responseText]);
         }
 
-        // Kịch bản: Tour nói chung
-        if (strpos($message, 'địa điểm du lịch') !== false || strpos($message, 'tour') !== false) {
-            $tours = Tours::take(5)->get();
+        $fullPrompt = "Bạn là chatbot tư vấn du lịch thân thiện và thông minh. Dưới đây là $filterDescription:\n$tourInfo\nNgười dùng hỏi: \"$message\"\nDựa trên danh sách trên, hãy gợi ý một cách tự nhiên, hấp dẫn và có link đến tour phù hợp. (Phản hồi ở dạng html thuần, hạn chế xuống dòng nhiều lần.)";
 
-            if ($tours->isEmpty()) {
-                $responseText = 'Hiện tại không có tour nào khả dụng.';
-            } else {
-                $tourList = '';
-                foreach ($tours as $tour) {
-                    $tourList .= "- Tên tour: {$tour->title}\n  Mô tả: {$tour->description}\n  Vị trí: {$tour->destination}\n  Giá: {$tour->priceAdult}\n  Ngày khởi hành: {$tour->startDate}\n\n";
-                }
+        // Gọi Gemini API  
+        try {
+            $client = new \GuzzleHttp\Client();
+            $apiKey = env('GEMINI_API_KEY');
+            $endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=' . $apiKey;
 
-                $fullPrompt = "Bạn là chatbot tư vấn du lịch. Dưới đây là danh sách tour từ hệ thống:
-$tourList
-Người dùng hỏi: $message
-Hãy tư vấn một cách thân thiện và hữu ích dựa trên danh sách tour trên.";
+            $response = $client->post($endpoint, [
+                'headers' => ['Content-Type' => 'application/json'],
+                'json' => [
+                    'contents' => [
+                        ['parts' => [['text' => $fullPrompt]]]
+                    ]
+                ],
+            ]);
 
-                $client = new Client();
-                $apiKey = env('GEMINI_API_KEY');
-                $endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=' . $apiKey;
+            $data = json_decode($response->getBody(), true);
+            $reply = $data['candidates'][0]['content']['parts'][0]['text'] ?? 'Xin lỗi, tôi chưa có câu trả lời phù hợp.';
+            $responseText = nl2br($reply) . "<br/><h4>Các gợi ý tour:</h4>$tourInfo"; // Đưa vào các tour gợi ý sau phản hồi  
 
-                try {
-                    $response = $client->post($endpoint, [
-                        'headers' => ['Content-Type' => 'application/json'],
-                        'json' => [
-                            'contents' => [
-                                ['parts' => [['text' => $fullPrompt]]]
-                            ]
-                        ],
-                    ]);
-
-                    $data = json_decode($response->getBody(), true);
-                    $reply = $data['candidates'][0]['content']['parts'][0]['text'] ?? 'Xin lỗi, tôi chưa có câu trả lời phù hợp.';
-                    $responseText = nl2br($reply);
-
-                } catch (RequestException $e) {
-                    \Log::error('Gemini API Error: ' . ($e->hasResponse() ? $e->getResponse()->getBody()->getContents() : $e->getMessage()));
-                    $responseText = 'Xin lỗi, hệ thống đang gặp lỗi khi gọi AI.';
-                } catch (\Exception $e) {
-                    \Log::error('General Error: ' . $e->getMessage());
-                    $responseText = 'Xin lỗi, hệ thống đang gặp lỗi.';
-                }
-            }
-
-            return response()->json(['response' => $responseText]);
+        } catch (\Exception $e) {
+            \Log::error('Gemini Error: ' . $e->getMessage());
+            $responseText = 'Xin lỗi, hệ thống đang gặp lỗi. Vui lòng thử lại sau.';
         }
 
-        // Kịch bản: Khuyến mãi
-        if (strpos($message, 'khuyến mãi') !== false || strpos($message, 'ưu đãi') !== false) {
-            $promotions = Promotion::select('description', 'discount')->take(3)->get();
-
-            if ($promotions->isEmpty()) {
-                $responseText = 'Hiện tại chưa có chương trình khuyến mãi nào.';
-            } else {
-                $responseText = "Khuyến mãi hiện tại:<br>";
-                foreach ($promotions as $promo) {
-                    $responseText .= '- ' . $promo->description . ' (' . $promo->discount . '%)<br>';
-                }
-            }
-
-            return response()->json(['response' => $responseText]);
-        }
-
-        // Mặc định
-        $responseText = 'Xin lỗi, tôi chưa hiểu yêu cầu của bạn. Bạn có thể hỏi về tour du lịch, địa điểm gần bạn hoặc các khuyến mãi hiện có.';
-
-        // Lưu lịch sử trò chuyện
-        // ChatHistory::create([
-        //     'user_id' => $request->user()->id ?? null, // Nếu có hệ thống đăng nhập
-        //     'message' => $message,
-        //     'response' => $responseText,
-        // ]);
-
-        // return response()->json(['response' => $responseText]);
+        return response()->json(['response' => $responseText]);
     }
 }

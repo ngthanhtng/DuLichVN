@@ -138,5 +138,5 @@
     </form>
 </section>
 
-
+@include('clients.blocks.chatbot')
 @include('clients.blocks.footer')

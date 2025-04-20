@@ -13,7 +13,7 @@
                             @foreach ($toursPopular as $tour)
                                 <div class="destination-item tour-grid style-three bgc-lighter">
                                     <div class="image">
-                                        <img src="{{ asset('clients/assets/images/gallery-tours/' . $tour->images[0]) }}"
+                                        <img src="{{ asset($tour->images[0]) }}"
                                             alt="Tour">
                                     </div>
                                     <div class="content">
@@ -52,7 +52,7 @@
                             @endif
 
 
-                            <img src="{{ asset('clients/assets/images/gallery-tours/' . $tour->images[0] . '') }}"
+                            <img src="{{ asset($tour->images[0] . '') }}"
                                 alt="Tour List">
                         </div>
                         <div class="content">
@@ -103,4 +103,6 @@
     </div>
 </section>
 <!-- Tour List Area end -->
+
+@include('clients.blocks.chatbot')
 @include('clients.blocks.footer')

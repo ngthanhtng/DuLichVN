@@ -153,4 +153,5 @@ Route::prefix('admin')->middleware('admin')->group(function () {
 });
 
 //API
+Route::post('/chat/greeting', [ChatbotController::class, 'greeting']);
 Route::post('/chat', [ChatbotController::class, 'chat']);

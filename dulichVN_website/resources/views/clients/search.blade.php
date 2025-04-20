@@ -63,4 +63,5 @@
 <!-- Tour Grid Area end -->
 
 @include('clients.blocks.new_letter')
+@include('clients.blocks.chatbot')
 @include('clients.blocks.footer')
